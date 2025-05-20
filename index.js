@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 1000;
 
 // ✅ Use correct client URL in CORS (no trailing slashes!)
 app.use(cors({
-  origin: ["https://mpholidayss.netlify.app", "https://mpformbackend.onrender.com"],
+  origin: ["https://jade-dusk-9792a2.netlify.app/", "https://mpformbackend.onrender.com"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
