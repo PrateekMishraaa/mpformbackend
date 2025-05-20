@@ -1,3 +1,4 @@
+// server.js
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -8,32 +9,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 1000;
 
-// ✅ Use CORS middleware BEFORE any routes
+// ✅ Use correct client URL in CORS (no trailing slashes!)
 app.use(cors({
-  origin: ["https://mpholidayss.netlify.app"], // frontend URL only
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // include OPTIONS
-  allowedHeaders: ["Content-Type", "Authorization"], // optional but helpful
-  credentials: true
+  origin: ["https://mpholidayss.netlify.app", "https://mpformbackend.onrender.com"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
 }));
 
-// ✅ Handle preflight OPTIONS requests
-app.options("*", cors());
-
-// Body parser
 app.use(express.json());
 
-// Routes
-app.use("/api", contact);
+// ✅ Route should match frontend URL (use /contact, not /api/contact)
+app.use("/contact", contact);
 
-// MongoDB connection
-mongoose.connect(process.env.MONGOURI)
-  .then(() => console.log('Connected to database'))
-  .catch(() => console.log('Disconnected'));
+// ✅ MongoDB connection
+mongoose.connect(process.env.MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch((err) => console.error('❌ Failed to connect to MongoDB:', err));
 
-// Test route
+// ✅ Health check route
 app.get("/", (req, res) => {
-  res.send('Arpita Trivedi');
+  res.send('🟢 Server is running - Arpita Trivedi');
 });
 
-// Start server
-app.listen(PORT, () => console.log(`Server started at port ${PORT}`));
+// ✅ Start server
+app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}`));
