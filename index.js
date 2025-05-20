@@ -10,10 +10,11 @@ const PORT = process.env.PORT || 1000;
 
 // ✅ Always use CORS middleware before routes
 app.use(cors({
-  origin: ["https://mpholidayss.netlify.app/"],
-  methods: ["GET", "POST", "PUT", "DELETE"], // 🛠️ Fix typo: PORT → POST
+  origin: ["https://mpholidayss.netlify.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use("/api", contact);
