@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 1000;
 
 // ✅ Always use CORS middleware before routes
 app.use(cors({
-  origin: ["https://mpholidayss.netlify.app","https://mpformbackend.onrender.com/"],
+  origin: ["https://mpholidayss.netlify.app","https://mpformbackend.onrender.com/api"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
