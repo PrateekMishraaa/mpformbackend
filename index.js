@@ -8,25 +8,30 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 1000;
 
-// ✅ Always use CORS middleware before routes
+// ✅ Use CORS middleware BEFORE any routes
 app.use(cors({
-  origin: ["https://mpholidayss.netlify.app","https://mpformbackend.onrender.com/api"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: ["https://mpholidayss.netlify.app"], // frontend URL only
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // include OPTIONS
+  allowedHeaders: ["Content-Type", "Authorization"], // optional but helpful
   credentials: true
 }));
 
+// ✅ Handle preflight OPTIONS requests
+app.options("*", cors());
 
+// Body parser
 app.use(express.json());
+
+// Routes
 app.use("/api", contact);
 
-// Connect to MongoDB
+// MongoDB connection
 mongoose.connect(process.env.MONGOURI)
   .then(() => console.log('Connected to database'))
   .catch(() => console.log('Disconnected'));
 
-// Root route
+// Test route
 app.get("/", (req, res) => {
-  console.log("Arpita");
   res.send('Arpita Trivedi');
 });
 
